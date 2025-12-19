@@ -1,6 +1,8 @@
 // app/auth/signup/page.js
 "use client";
 
+export const dynamic = 'force-dynamic';
+
 import { useState } from "react";
 import { useAuth } from "@/app/context/AuthContext";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -40,7 +42,6 @@ export default function SignupPage() {
     setLoading(true);
     setError("");
 
-    // Validation
     if (formData.password !== formData.confirmPassword) {
       setError("Нууц үг таарахгүй байна");
       setLoading(false);
@@ -119,9 +120,7 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-muted/30 py-12 px-4 flex justify-center">
       <div className="max-w-2xl w-full bg-card border border-border/50 rounded-2xl shadow-xl shadow-primary/5 p-8 relative overflow-hidden">
-        {/* Decorative glow */}
         <div className="absolute -top-24 -right-24 size-64 bg-primary/5 rounded-full blur-3xl" />
-
         <div className="mb-8 text-center relative z-10">
           <Link href="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors mb-6">
             <ArrowLeft className="size-4 mr-1" /> Нүүр хуудас
@@ -208,7 +207,7 @@ export default function SignupPage() {
             </div>
           </div>
 
-          {/* Password */}
+          {/* Password & Confirm */}
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
@@ -248,7 +247,7 @@ export default function SignupPage() {
             </div>
           </div>
 
-          {/* Phone & Address (Optional) */}
+          {/* Phone & Address */}
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
