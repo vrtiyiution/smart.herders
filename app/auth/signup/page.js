@@ -1,15 +1,14 @@
 // app/auth/signup/page.js
 "use client";
 
-export const dynamic = 'force-dynamic';
-
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useAuth } from "@/app/context/AuthContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { User, Mail, Lock, Phone, MapPin, Loader, Check, AlertCircle, ArrowLeft } from "lucide-react";
 
-export default function SignupPage() {
+// Signup компонент (useSearchParams агуулсан)
+function SignupContent() {
   const { signUp } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -129,7 +128,6 @@ export default function SignupPage() {
           <p className="text-muted-foreground">Smart Herder платформд тавтай морил</p>
         </div>
 
-        {/* Role Selection */}
         <div className="mb-8 relative z-10">
           <label className="block text-sm font-medium text-foreground mb-3">
             Та хэн бэ?
@@ -169,7 +167,6 @@ export default function SignupPage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-          {/* Full Name */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
               Нэр *
@@ -188,7 +185,6 @@ export default function SignupPage() {
             </div>
           </div>
 
-          {/* Email */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
               И-мэйл хаяг *
@@ -207,7 +203,6 @@ export default function SignupPage() {
             </div>
           </div>
 
-          {/* Password & Confirm */}
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
@@ -247,7 +242,6 @@ export default function SignupPage() {
             </div>
           </div>
 
-          {/* Phone & Address */}
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
@@ -284,7 +278,6 @@ export default function SignupPage() {
             </div>
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}
@@ -311,5 +304,21 @@ export default function SignupPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Үндсэн экспорт (Suspense-ээр хүрээлэгдсэн)
+export default function SignupPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-muted/30">
+        <div className="text-center">
+          <Loader className="size-8 animate-spin mx-auto mb-4 text-primary" />
+          <p className="text-muted-foreground">Хуудас ачааллаж байна...</p>
+        </div>
+      </div>
+    }>
+      <SignupContent />
+    </Suspense>
   );
 }
